@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,14 +40,14 @@ public class APISearchAsync extends AsyncTask<String,Void,LinkedList>  {
     public Context mContext;
 
 
-    private WeatherSearchCompletionListener mCompletionListener;
+    private APISearchCompletionListener mCompletionListener;
 
-    public interface WeatherSearchCompletionListener{
-         void weatherDataFound(LinkedList result);
-         void weatherDataNotFound();
+    public interface APISearchCompletionListener{
+         void APIDataFound(LinkedList result);
+         void APIDataNotFound();
     }
     //WeatherDataAsyncTask constructor
-    public APISearchAsync(Context context, WeatherSearchCompletionListener completionListener){
+    public APISearchAsync(Context context, APISearchCompletionListener completionListener){
         mContext = context;
         mCompletionListener = completionListener;
     }
@@ -59,8 +58,8 @@ public class APISearchAsync extends AsyncTask<String,Void,LinkedList>  {
     protected void onPreExecute() {
         //on PreExecute show the progress dialogue to inform user that the data is loading
         pd = new ProgressDialog(mContext);
-        pd.setTitle("Processing Weather Data...");
-        pd.setMessage("Fetching Weather from WeatherUnderground");
+        pd.setTitle("Processing Shipping Data...");
+        pd.setMessage("Fetching Data from API");
         pd.setCancelable(false);
         pd.setIndeterminate(true);
         pd.show();
@@ -74,78 +73,43 @@ public class APISearchAsync extends AsyncTask<String,Void,LinkedList>  {
         SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(mContext);
         SharedPreferences.Editor editor = sharedPref.edit();
 
-        //store the values of system preferences in two booleans
-        boolean pressedFahrenheit = sharedPref.getBoolean("fPressed", true);
-        boolean pressedCelsius = sharedPref.getBoolean("cPressed", false);
-        //use the location found in that was passed onto the asynctask through the String query
         String locationAddr = query[0];
 
-        //pull up the current zipCode entered into sharedPreferences
-        String zipcode = sharedPref.getString("zipCode", null);
-        String zipAddr = zipcode + ".json";
 
-        //Data structure used to store the weather data received from the Json object
-        LinkedList forecastDayList = new LinkedList();
+        LinkedList apiDataList = new LinkedList();
         URL url;
 
         try {
-            //this is the base url
-            url = new URL(BASE_ADDR + locationAddr);
-            //get the parsed json data from the location url address
-            String getJsonLocation = getJSON(LOC_ADDR+locationAddr,1000);
+            //this is the url connect to Fedex, Ups, Usps
+            url = new URL(FEDEX_ADDR);
+            url = new URL(UPS_ADDR);
+            url = new URL(USPS_ADDR);
+
+            //get the parsed json data for
+            String getJsonFedex = getJSON(FEDEX_ADDR,1000);
+            String getJsonUps = getJSON(UPS_ADDR,1000);
+            String getJsonUsps = getJSON(USPS_ADDR,1000);
+
+
             //store the parsed json object into a JSONObject
-            JSONObject jsonObjectLocation = new JSONObject(getJsonLocation);
+            JSONObject jsonFedexLocation = new JSONObject(getJsonFedex);
+            JSONObject jsonUpsLocation = new JSONObject(getJsonUps);
+            JSONObject jsonUspsLocation = new JSONObject(getJsonUsps);
 
             //get the current observation key name object
-            JSONObject locationObject = jsonObjectLocation.getJSONObject("current_observation");
-            //get the json object display_location that is inside of current observation object
-            JSONObject currentDisplayLocationObject = locationObject.getJSONObject("display_location");
-            //get the string value that is inside of the key named "full"
-            String location = currentDisplayLocationObject.getString("full");
-            //add the object into the forecastDayList
-            forecastDayList.add(location);
+            JSONObject fedexObject = jsonFedexLocation.getJSONObject("FEDEX");
+            JSONObject upsObject = jsonUpsLocation.getJSONObject("UPS");
+            JSONObject uspsObject = jsonUspsLocation.getJSONObject("USPS");
 
-            //get the parsed json data from the forecast url address
-            String getJsonForecast = getJSON(BASE_ADDR+locationAddr,1000);
-            //store the parsed json object into a JSONObject jsonObjectForecast
-            JSONObject jsonObjectForecast = new JSONObject(getJsonForecast);
-            //get the forecast key name object
-            JSONObject forecastObject = jsonObjectForecast.getJSONObject("forecast");
-            //get the json object simpleforecast that is inside of forecast object
-            JSONObject simpleForecastObject = forecastObject.getJSONObject("simpleforecast");
-            //get the json array forecastday that is inside of simpleforecast object
-            JSONArray forecastDays = simpleForecastObject.getJSONArray("forecastday");
 
-            //loop through forecast data for 3 period (i.e. weather information for the next three days)
-            for(int i=0; i<3; i++) {
-                //if systemPreferences Fahrenheit is selected, pull the fahrenheit temperature accordingly
-                if(pressedFahrenheit) {
-                    //get the ith days forecast and pull the temperature, icon url and description from the json object forecastDayObject
-                    JSONObject forecastDaysObject = forecastDays.getJSONObject(i);
-                    JSONObject highFahrenheit = forecastDaysObject.getJSONObject("high");
-                    String temperature = highFahrenheit.getString("fahrenheit") + "F";
-                    String description = forecastDaysObject.getString("conditions");
-                    String icon_url = forecastDaysObject.getString("icon_url");
-                    forecastDayList.add(temperature);
-                    forecastDayList.add(description);
-                    forecastDayList.add(icon_url);
-                }else {
-                    //if systemPreferences Celsius is selected, pull the Celsius temperature accordingly
-                    //get the ith days forecast and pull the temperature, icon url and description from the json object forecastDayObject
-                    JSONObject forecastDaysObject = forecastDays.getJSONObject(i);
-                    JSONObject highFahrenheit = forecastDaysObject.getJSONObject("high");
-                    String temperature = highFahrenheit.getString("celsius") + "C";
-                    String description = forecastDaysObject.getString("conditions");
-                    String icon_url = forecastDaysObject.getString("icon_url");
-                    forecastDayList.add(temperature);
-                    forecastDayList.add(description);
-                    forecastDayList.add(icon_url);
-                }
-            }
+            apiDataList.add(fedexObject);
+            apiDataList.add(upsObject);
+            apiDataList.add(uspsObject);
+
 
 
             //return linked list of all the forecast information pulled from the url
-            return forecastDayList;
+            return apiDataList;
 
         } catch (MalformedURLException e1) {
             System.out.println("Malformed exception");
@@ -160,7 +124,6 @@ public class APISearchAsync extends AsyncTask<String,Void,LinkedList>  {
 }
 
     /**
-     *
      * @param url passed in from doInBackground
      * @param timeout used to not have ui lag
      * @return returns the parsed Json string from the given url
@@ -218,10 +181,10 @@ public class APISearchAsync extends AsyncTask<String,Void,LinkedList>  {
         }
         //if result returned is not null then send the result to completion listener weatherDataFound
         if (result != null) {
-                mCompletionListener.weatherDataFound(result);
+                mCompletionListener.APIDataFound(result);
             //otehrwise send the weatherDataNotFound listener
         }else if(result == null){
-            mCompletionListener.weatherDataNotFound();
+            mCompletionListener.APIDataNotFound();
         }
     }
 

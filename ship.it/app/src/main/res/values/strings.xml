@@ -28,4 +28,7 @@
     <string name="new_package_header">track a new package</string>
     <string name="enter_tracking_number_hint">enter tracking number</string>
     <string name="track_button">track &#x276F;</string>
+
+    <string name="location_permission_title">LocationPermission</string>
+    <string name="location_permission_message">Would like to access your location?</string>
 </resources>
