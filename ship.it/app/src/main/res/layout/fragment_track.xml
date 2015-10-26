@@ -1,0 +1,102 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="0dp"
+    tools:context=".MainActivity$TrackFragment">
+
+    <TextView
+        android:id="@+id/section_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TabHost
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/tabHost"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TabWidget
+                android:id="@+id/tabs"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:tabStripEnabled="true"
+                android:measureWithLargestChild="false"
+                android:baselineAligned="false"></TabWidget>
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ScrollView
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:scrollbars="none">
+
+                    <RelativeLayout
+                        android:id="@+id/track_container"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="@dimen/standard_margin"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/new_package_header"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:textSize="@dimen/small_caps_text_size"
+                            android:textColor="@color/DarkGray"
+                            android:textAllCaps="true"
+                            android:text="@string/new_package_header"/>
+
+                        <LinearLayout
+                            android:layout_below="@id/new_package_header"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <EditText
+                                android:id="@+id/enter_tracking_number"
+                                android:layout_below="@id/new_package_header"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".20"
+                                android:layout_marginLeft="-5dp"
+                                android:layout_marginRight="-5dp"
+                                android:inputType="textCapCharacters"
+                                android:hint="@string/enter_tracking_number_hint"
+                                android:textColorHint="@color/DarkGray"
+                                android:ems="10"/>
+
+                            <Button
+                                android:id="@+id/track_button"
+                                android:background="@drawable/custom_button_accent"
+                                android:layout_alignParentRight="true"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:textSize="@dimen/body_text_size"
+                                android:textColor="@android:color/primary_text_dark"
+                                android:textAllCaps="false"
+                                android:text="@string/track_button"/>
+
+                        </LinearLayout>
+                    </RelativeLayout>
+                </ScrollView>
+            </FrameLayout>
+        </LinearLayout>
+    </TabHost>
+</RelativeLayout>

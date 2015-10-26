@@ -1,0 +1,18 @@
+<resources>
+    <color name="ThemeColor">#0066CC</color>
+    <color name="ThemeColorSecondary">#003366</color>
+    <color name="LightGray">#DDDDDD</color>
+    <color name="DarkGray">#808080</color>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/ThemeColor</item>
+        <item name="colorAccent">@color/ThemeColor</item>
+        <item name="actionBarTabBarStyle">@style/CustomTabBar</item>
+    </style>
+
+    <style name="CustomTabBar" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:background">@color/ThemeColorSecondary</item>
+    </style>
+
+</resources>

@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">ship.it</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="tab_1">ship</string>
+    <string name="tab_2">track</string>
+
+    <string name="recepient_header">recepient details</string>
+
+    <string name="shipping_from">shipping from</string>
+    <string name="to">to:</string>
+
+    <string name="postal_code_hint">postal code</string>
+
+    <string name="package_header">package dimensions</string>
+
+    <string name="x">x</string>
+    <string name="weight_hint">weight</string>
+    <string name="declared_value_hint">declared value</string>
+    <string name="length_hint">length</string>
+    <string name="width_hint">width</string>
+    <string name="height_hint">height</string>
+
+    <string name="get_rates">get rates &#x276F;</string>
+
+    <string name="new_package_header">track a new package</string>
+    <string name="enter_tracking_number_hint">enter tracking number</string>
+    <string name="track_button">track &#x276F;</string>
+</resources>

@@ -1,0 +1,301 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="0dp"
+    tools:context=".MainActivity$ShipFragment">
+
+    <TextView
+        android:id="@+id/section_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TabHost
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/tabHost"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TabWidget
+                android:id="@+id/tabs"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:tabStripEnabled="true"
+                android:measureWithLargestChild="false"
+                android:baselineAligned="false"></TabWidget>
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ScrollView
+                    xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:scrollbars="none">
+
+                    <RelativeLayout
+                        android:id="@+id/ship_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="@dimen/standard_margin"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:id="@+id/shipping_from_container"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp">
+
+                            <TextView
+                                android:id="@+id/shipping_from"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:textSize="@dimen/body_text_size"
+                                android:textColor="@android:color/primary_text_light"
+                                android:text="@string/shipping_from"/>
+
+                            <Button
+                                android:id="@+id/current_location"
+                                android:background="@drawable/custom_button"
+                                android:layout_toRightOf="@id/shipping_from"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginRight="8dp"
+                                android:textSize="@dimen/body_text_size"
+                                android:textAllCaps="false"
+                                android:text="Arlington, VA"/>
+
+                            <TextView
+                                android:id="@+id/to"
+                                android:layout_toRightOf="@id/current_location"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:textSize="@dimen/body_text_size"
+                                android:textColor="@android:color/primary_text_light"
+                                android:text="@string/to"/>
+
+                        </RelativeLayout>
+
+                        <TextView
+                            android:id="@+id/recepient_header"
+                            android:layout_below="@id/shipping_from_container"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:textSize="@dimen/small_caps_text_size"
+                            android:textColor="@color/DarkGray"
+                            android:textAllCaps="true"
+                            android:text="@string/recepient_header"/>
+
+                        <Spinner
+                            android:id="@+id/country_spinner"
+                            android:background="@color/LightGray"
+                            android:layout_below="@id/recepient_header"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginLeft="-5dp"
+                            android:layout_marginRight="-5dp"
+                            android:padding="6dp"
+                            android:entries="@array/countries_array"/>
+
+                        <EditText
+                            android:id="@+id/postal_code"
+                            android:layout_below="@id/country_spinner"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:layout_marginLeft="-5dp"
+                            android:layout_marginRight="-5dp"
+                            android:inputType="textCapCharacters"
+                            android:hint="@string/postal_code_hint"
+                            android:textColorHint="@color/DarkGray"
+                            android:ems="10"/>
+
+                        <TextView
+                            android:id="@+id/package_header"
+                            android:layout_below="@id/postal_code"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="24dp"
+                            android:textSize="@dimen/small_caps_text_size"
+                            android:textColor="@color/DarkGray"
+                            android:textAllCaps="true"
+                            android:text="@string/package_header"/>
+
+                        <LinearLayout
+                            android:id="@+id/dimensions_top_container"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:layout_below="@id/package_header"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp">
+
+                            <EditText
+                                android:id="@+id/weight"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".20"
+                                android:layout_marginTop="0dp"
+                                android:layout_marginLeft="-5dp"
+                                android:layout_marginRight="-5dp"
+                                android:inputType="numberDecimal"
+                                android:maxLength="10"
+                                android:hint="@string/weight_hint"
+                                android:textColorHint="@color/DarkGray"
+                                android:ems="10"/>
+
+                            <Spinner
+                                android:id="@+id/weight_units"
+                                android:background="@color/LightGray"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="0dp"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginRight="16dp"
+                                android:padding="6dp"
+                                android:entries="@array/weight_units_array"/>
+
+                            <EditText
+                                android:id="@+id/declared_value"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".40"
+                                android:layout_marginTop="0dp"
+                                android:layout_marginLeft="-5dp"
+                                android:layout_marginRight="-5dp"
+                                android:inputType="numberDecimal"
+                                android:maxLength="10"
+                                android:hint="@string/declared_value_hint"
+                                android:textColorHint="@color/DarkGray"
+                                android:ems="10"/>
+
+                            <Spinner
+                                android:id="@+id/currency_units"
+                                android:background="@color/LightGray"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="0dp"
+                                android:layout_marginLeft="8dp"
+                                android:padding="6dp"
+                                android:entries="@array/currency_units_array"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/dimensions_bottom_container"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:layout_below="@id/dimensions_top_container"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp">
+
+                            <EditText
+                                android:id="@+id/length"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".20"
+                                android:layout_marginTop="0dp"
+                                android:layout_marginLeft="-5dp"
+                                android:layout_marginRight="-5dp"
+                                android:inputType="numberDecimal"
+                                android:maxLength="10"
+                                android:hint="@string/length_hint"
+                                android:textColorHint="@color/DarkGray"
+                                android:ems="10"/>
+
+                            <TextView
+                                android:id="@+id/x_1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginRight="8dp"
+                                android:textSize="@dimen/body_text_size"
+                                android:textColor="@android:color/primary_text_light"
+                                android:text="@string/x"/>
+
+                            <EditText
+                                android:id="@+id/width"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".20"
+                                android:layout_marginTop="0dp"
+                                android:layout_marginLeft="-5dp"
+                                android:layout_marginRight="-5dp"
+                                android:inputType="numberDecimal"
+                                android:maxLength="10"
+                                android:hint="@string/width_hint"
+                                android:textColorHint="@color/DarkGray"
+                                android:ems="10"/>
+
+                            <TextView
+                                android:id="@+id/x_2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="8dp"
+                                android:layout_marginRight="8dp"
+                                android:textSize="@dimen/body_text_size"
+                                android:textColor="@android:color/primary_text_light"
+                                android:text="@string/x"/>
+
+                            <EditText
+                                android:id="@+id/height"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight=".20"
+                                android:layout_marginTop="0dp"
+                                android:layout_marginLeft="-5dp"
+                                android:layout_marginRight="-5dp"
+                                android:inputType="numberDecimal"
+                                android:maxLength="10"
+                                android:hint="@string/height_hint"
+                                android:textColorHint="@color/DarkGray"
+                                android:ems="10"/>
+
+                            <Spinner
+                                android:id="@+id/dimension_units"
+                                android:background="@color/LightGray"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="0dp"
+                                android:layout_marginLeft="8dp"
+                                android:padding="6dp"
+                                android:entries="@array/dimension_units_array"/>
+
+                        </LinearLayout>
+
+                        <Button
+                            android:id="@+id/get_rates"
+                            android:background="@drawable/custom_button_accent"
+                            android:layout_below="@id/dimensions_bottom_container"
+                            android:layout_alignParentRight="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="24dp"
+                            android:textSize="@dimen/body_text_size"
+                            android:textColor="@android:color/primary_text_dark"
+                            android:textAllCaps="false"
+                            android:text="@string/get_rates"/>
+
+                    </RelativeLayout>
+                </ScrollView>
+            </FrameLayout>
+        </LinearLayout>
+    </TabHost>
+</RelativeLayout>
